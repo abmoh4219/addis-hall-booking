@@ -1,11 +1,13 @@
 import rooms from '@/data/rooms.json';
-
+import RoomCard from '@/components/RoomCard';
+import Heading from '@/components/Heading';
 export default function Home() {
   return (
     <>
+      <Heading title='Available Rooms'/>
       {rooms.length > 0 ? (
         rooms.map((room) => 
-          <h3 key={room.id}>{room.name}</h3>
+          <RoomCard room={room}/>
         )
       ) : (
         <p>No rooms available at the moment</p>
