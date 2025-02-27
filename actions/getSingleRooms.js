@@ -4,28 +4,22 @@ import { createAdminClient } from "@/config/appwrite";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-async function getAllRooms() {
+async function getSingleRooms (id){
     try {
         const {databases}= await createAdminClient();
         
-        //FETCH ROOMS
+        //FETCH SINGLE ROOMS
         const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE;
-        const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS;
+        const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS; 
 
+        const room= await databases.getDocument(DATABASE_ID,COLLECTION_ID,id);
 
-        const {documents: rooms}= await databases.listDocuments(DATABASE_ID,COLLECTION_ID);
-
-        // Revalidate the cache for this path
-        //revalidatePath('/','layout');
-        
-        return rooms;
-
+        return room;
 
     } catch (error) {
         console.error('Faild to get rooms',error);
         redirect('/error');
-        //return [];
     }
 }
 
-export default getAllRooms;
+export default getSingleRooms;
