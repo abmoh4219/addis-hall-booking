@@ -1,9 +1,23 @@
+'use client';
 import Link from "next/link";
+import { useEffect } from "react";
+import { useFormState } from "react-dom";
+import { createSession } from "@/actions/createSession";
+import { toast } from "react-toastify";
 const LoginPage = () => {
+    const [state,formAction]= useFormState(createSession,{});
+
+    useEffect(() => {
+      if (state.error) {
+        toast.error(state.error);
+        
+      }
+    },[state]);
+    
     return ( 
         <div className="flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm mt-20">
-          <form>
+          <form action={formAction}>
             <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
               Login
             </h2>
@@ -30,7 +44,7 @@ const LoginPage = () => {
                 id="password"
                 name="password"
                 className="border rounded w-full py-2 px-3"
-                required
+                
               />
             </div>
 
