@@ -4,13 +4,18 @@ import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { createSession } from "@/actions/createSession";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 const LoginPage = () => {
     const [state,formAction]= useFormState(createSession,{});
+    const router=useRouter();
 
     useEffect(() => {
       if (state.error) {
         toast.error(state.error);
-        
+      }
+      if (state.success) {
+        toast.success('Logged in successfully');
+        router.push('/');
       }
     },[state]);
     
@@ -44,7 +49,7 @@ const LoginPage = () => {
                 id="password"
                 name="password"
                 className="border rounded w-full py-2 px-3"
-                
+                required
               />
             </div>
 
