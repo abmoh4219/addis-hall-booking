@@ -1,5 +1,5 @@
 'use server';
-import { createSessionClient } from "@/config/appwrite";
+import { createAdminClient } from "@/config/appwrite";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
@@ -14,8 +14,10 @@ export async function createSession(previousState,formData) {
             };
         }
 
-        const {account} = await createSessionClient();
+        const {account} = await createAdminClient();
         const session= await account.createEmailPasswordSession(email,password);
+        console.log(account,session);
+        
 
         const cookie= cookies();
         cookie.set('appwrite-session',session.secret,{
