@@ -82,7 +82,9 @@ const Header = () => {
             <div className="ml-auto">
               <div className="ml-4 flex items-center md:ml-6">
                 {/* <!-- Logged Out Only --> */}
-                <Link
+                {!isAuthenticated && (
+                  <>
+                                    <Link
                   href="/login"
                   className="mr-3 text-gray-800 hover:text-gray-600"
                 >
@@ -94,15 +96,21 @@ const Header = () => {
                 >
                   <FaUser className="inline mr-1"/> Register
                 </Link>
-                <Link href="/rooms/my">
-                <FaBuilding className="inline mr-1"/> My Rooms
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="mx-3 text-gray-800 hover:text-gray-600"
-                >
-                <FaSignOutAlt className="inline mr-1"/> Sign Out
-                </button>
+                  </>
+                )}
+                {isAuthenticated && (
+                  <>
+                    <Link href="/rooms/my">
+                    <FaBuilding className="inline mr-1"/> My Rooms
+                    </Link>
+                    <button
+                     onClick={handleLogout}
+                     className="mx-3 text-gray-800 hover:text-gray-600"
+                    >
+                    <FaSignOutAlt className="inline mr-1"/> Sign Out
+                    </button>
+                  </>
+                )}  
               </div>
             </div>
           </div>
@@ -118,18 +126,22 @@ const Header = () => {
               Rooms
             </a>
             {/* <!-- Logged In Only --> */}
-            <a
+            {isAuthenticated && (
+              <>
+                <Link
               href="/bookings"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
             >
               Bookings
-            </a>
-            <a
+            </Link>
+            <Link
               href="/rooms/add"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
             >
               Add Room
-            </a>
+            </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
