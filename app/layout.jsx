@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import "@/assets/styles/globals.css";
-
+import AuthWrapper from "@/components/AuthWrapper";
 const inter=Inter({subsets: ['latin']});
 
 export const metadata = {
@@ -14,7 +14,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <AuthWrapper>
+      <html lang="en">
       <body className={inter.className}>
         <Header/>
         <main className="mx-auto max-w-7x1 px-4 py-6 sm:px-4 lg:px-7">
@@ -24,6 +25,8 @@ export default function RootLayout({ children }) {
         <Footer/>
         <ToastContainer/>
       </body>
-    </html>
+     </html>
+
+    </AuthWrapper>
   );
 }
