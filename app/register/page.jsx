@@ -1,5 +1,6 @@
 'use client';
 import Link from "next/link";
+
 const RegisterPage = () => {
     return ( 
         <div className="flex items-center justify-center">
