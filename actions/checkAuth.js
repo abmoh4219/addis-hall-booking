@@ -3,21 +3,27 @@ import { createSessionClient } from "@/config/appwrite";
 import { cookies } from "next/headers";
 
 export async function checkAuth() {
-    const sessionCookie= cookies().get('appwrite-session');
+    const cookieStore= await cookies();
+    const sessionCookie=  cookieStore.get('appwrite-session');
+    console.log("checkAuth: Session Cookie:", sessionCookie);
     //check for session cookie
     if (!sessionCookie) {
+        console.log("checkAuth: No session cookie found");
         return{
-            isAuthenticated: false
+            isAuthenticated: false,
         }
     }
 
     try {
         // use session client to verify the session
+        console.log("cookie value: the cookie value ", sessionCookie.value);
         const {account} = await createSessionClient(sessionCookie.value);
+        console.log(account);
+        
 
         //Get user info
-        const {user}= await account.get();
-        console.log('user authenticated',user);
+        const user= await account.get();
+        console.log("checkAuth: User Retrieved:", user);
 
         return{
             isAuthenticated: true,

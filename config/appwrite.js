@@ -1,5 +1,5 @@
 import {Client,Databases,Account,Storage} from 'node-appwrite';
-import { cookies } from 'next/headers';
+
 
 //ADMIN CLIENT
 const createAdminClient= async () => {
@@ -27,17 +27,15 @@ const createAdminClient= async () => {
 };
 
 //SESSION CLIENT
-const createSessionClient= async () => {
+const createSessionClient= async (session) => {
     const client= new Client()
       .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
       .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT);
-    
-    const cookieStore = cookies();
-    const session = cookieStore.get('appwrite-session')?.value;
-     
       
     if (session) {
         client.setSession(session);
+    }  else {
+      console.log("createSessionClient: No session token found");
     }
 
     return{

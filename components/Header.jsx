@@ -12,7 +12,6 @@ const Header = () => {
     const router= useRouter();
 
     const {isAuthenticated,setIsAuthenticated}= useAuth();
-
     
 
     

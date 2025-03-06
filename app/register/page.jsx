@@ -1,7 +1,34 @@
 'use client';
 import Link from "next/link";
-
+import { useEffect } from "react";
+import { useActionState } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/authContext";
+import { createUser } from "@/actions/createUser";
 const RegisterPage = () => {
+  const [state,formAction]= useActionState(createUser,{});
+  const router=useRouter();
+  const {isAuthenticated,setIsAuthenticated}= useAuth();
+
+  // Redirect if already authenticated 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/'); 
+    }
+  }, [isAuthenticated, router]);
+
+  useEffect(() => {
+    if (state.error) {
+      toast.error(state.error);
+    }
+    if (state.success) {
+      setIsAuthenticated(true);
+      toast.success('Registered successfully');
+      router.push('/');
+    }
+  },[state]);
+  
     return ( 
         <div className="flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm mt-20">
