@@ -6,7 +6,32 @@ import { revalidatePath } from "next/cache";
 
 export async function createRoom(previousState,formData) {
     //Get databases instance
-    const {databases}= await createAdminClient();
+    const {databases,storage}= await createAdminClient();
+
+    //Uploading images
+    let imageId;
+    const image= formData.get(image);
+    if (image && image.size > 0 && image.name !== 'undefined') {
+        try {
+            const file= await storage.createFile(process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS,
+                ID.unique(),
+                image
+            );
+            imageId= file.$id;
+            console.log('image uploaded successfully', imageId);
+            
+        } catch (error) {
+            console.log('Error uploading image', error);
+            return{
+                error: 'Error uploading image',
+            }
+            
+        }
+    }
+    else{
+        console.log('no image file is provided or file is invalid ');
+        
+    }
 
     try {
         const {user} = await checkAuth();
@@ -32,6 +57,7 @@ export async function createRoom(previousState,formData) {
                 location: formData.get('location'),
                 availability: formData.get('availability'),
                 amenities: formData.get('amenities'),
+                images: imageId,
             }
         );
         console.log('Document created successfully',newRoom);
