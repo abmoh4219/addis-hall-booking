@@ -5,10 +5,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'cloud.appwrite.io',
-                postname: '**'
-            }
-        ]
-    }
+                pathname: '**',
+            },
+        ],
+    },
 };
 
 export default nextConfig;
