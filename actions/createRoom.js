@@ -10,11 +10,10 @@ export async function createRoom(previousState,formData) {
 
     //Uploading images
     let imageId;
-    const image= formData.get(image);
+    const image= formData.get('image');
     if (image && image.size > 0 && image.name !== 'undefined') {
         try {
-            const file= await storage.createFile(process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS,
-                ID.unique(),
+            const file= await storage.createFile('rooms',ID.unique(),
                 image
             );
             imageId= file.$id;
@@ -57,7 +56,7 @@ export async function createRoom(previousState,formData) {
                 location: formData.get('location'),
                 availability: formData.get('availability'),
                 amenities: formData.get('amenities'),
-                images: imageId,
+                image: imageId,
             }
         );
         console.log('Document created successfully',newRoom);
