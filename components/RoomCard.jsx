@@ -19,6 +19,7 @@ const RoomCard = ({room}) => {
             width={400}
             height={100}
             alt={room.name}
+            unoptimized= {true}
             className="w-full sm:w-32 sm:h-32 mb-3 sm:mb-0 object-cover rounded-lg"
           />
           <div className="space-y-1">
