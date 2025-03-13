@@ -1,37 +1,39 @@
 'use server';
-import { createAdminClient } from "@/config/appwrite.js";
+import { createAdminClient, createSessionClient } from "@/config/appwrite.js";
 import { cookies } from "next/headers";
 import { Query } from "node-appwrite";
 import { redirect } from "next/navigation";
 
-async function getAllRooms() {
+async function getMyRooms() {
     const sessionCookie= cookies().get('appwrite-session');
     if(!sessionCookie){
-        return{
-            error:'No session cookie found'
-        };
+        redirect('/login');
     }
     try {
-        const {databases}= await createAdminClient();
+        const {account,databases}= await createSessionClient(sessionCookie.value);
+
+        //Get user id
+        const user= await account.get();
+        const userId= user.$id;
+
         
-        //FETCH ROOMS
+        //FETCH user room
         const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE;
         const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS;
 
 
-        const {documents: rooms}= await databases.listDocuments(DATABASE_ID,COLLECTION_ID);
+        const {documents: rooms}= await databases.listDocuments(DATABASE_ID,COLLECTION_ID,
+            [ Query.equal('user_id',userId)]
+        );
 
-        // Revalidate the cache for this path
-        //revalidatePath('/','layout');
         
         return rooms;
 
-
     } catch (error) {
-        console.error('Faild to get rooms',error);
+        console.error('Faild to get user rooms',error);
         redirect('/error');
         //return [];
     }
 }
 
-export default getAllRooms;
+export default getMyRooms;

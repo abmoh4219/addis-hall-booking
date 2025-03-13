@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FaChevronLeft } from 'react-icons/fa'
 
 const Page = async ({params}) => {
-    const { id }=params;
+    const { id }=  params;
     const room=await getSingleRooms(id);
     const bucketId=process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS;
     const projectId= process.env.NEXT_PUBLIC_APPWRITE_PROJECT;
@@ -38,6 +38,7 @@ const Page = async ({params}) => {
             width={400}
             height={100}
             alt={room.name}
+            unoptimized= {true}
             className="w-full sm:w-1/3 h-64 object-cover rounded-lg"
           />
 
