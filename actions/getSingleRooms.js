@@ -4,7 +4,7 @@ import { createAdminClient } from "@/config/appwrite";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-async function getSingleRooms (id){
+export async function getSingleRooms (id){
     try {
         const {databases}= await createAdminClient();
         
@@ -21,5 +21,3 @@ async function getSingleRooms (id){
         redirect('/error');
     }
 }
-
-export default getSingleRooms;

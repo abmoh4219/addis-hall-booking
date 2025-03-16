@@ -1,6 +1,6 @@
 import BookingForm from '@/components/BookingForm';
 import Heading from '@/components/Heading';
-import getSingleRooms from '@/actions/getSingleRooms';
+import {getSingleRooms} from '@/actions/getSingleRooms';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaChevronLeft } from 'react-icons/fa'
@@ -12,8 +12,7 @@ const Page = async ({params}) => {
     const projectId= process.env.NEXT_PUBLIC_APPWRITE_PROJECT;
     const endpoint= process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
 
-    const imageUrl=`${endpoint}/storage/buckets/${bucketId}/files/$
-    {room.image}/view?project=${projectId}`;
+    const imageUrl=`${endpoint}/storage/buckets/${bucketId}/files/${room.image}/view?project=${projectId}`;
 
     const imageSrc= room.image ? imageUrl : '/images/no-image.jpg';
     
