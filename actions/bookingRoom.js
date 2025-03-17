@@ -35,19 +35,19 @@ async function bookRoom(previousState, formData) {
         const bookingData={
             check_in: checkInDateTime,
             check_out: checkOutDateTime,
-            user_id: user.$id,
-            room_id: formData.get('room_id'),
+            user_id: user.id,
+            rooms_id: formData.get('room_id'),
             
         }
 
         const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE;
-        const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS;
+        const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS;
 
         // create a new booking
         const newBooking= await databases.createDocument(DATABASE_ID,COLLECTION_ID,
             ID.unique(),
             bookingData
-        )
+        );
 
         revalidatePath('/bookings','layout');
         return{
