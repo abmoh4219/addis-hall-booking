@@ -1,5 +1,5 @@
 'use server';
-import { createAdminClient, createSessionClient } from "@/config/appwrite.js";
+import {  createSessionClient } from "@/config/appwrite.js";
 import { cookies } from "next/headers";
 import { Query } from "node-appwrite";
 import { redirect } from "next/navigation";
